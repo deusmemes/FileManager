@@ -1,4 +1,4 @@
-package com.example.filemanager
+package com.example.filemanager.activity
 
 import android.Manifest
 import android.content.Intent
@@ -8,12 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import androidx.annotation.RequiresApi
-import com.example.filemanager.list.FilesActivity
+import com.example.filemanager.R
 import com.example.filemanager.permissions.PermissionManager
-import com.example.filemanager.services.FileService
+import com.example.filemanager.service.FileService
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import kotlin.math.pow
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -44,6 +43,10 @@ class MainActivity : AppCompatActivity() {
         buttonFiles.setOnClickListener { fileService.open(rootDir, this) }
         buttonSystem.setOnClickListener {
             val intent = Intent(this, SystemActivity::class.java)
+            startActivity(intent)
+        }
+        buttonFavorites.setOnClickListener {
+            val intent = Intent(this, FavoritesActivity::class.java)
             startActivity(intent)
         }
     }

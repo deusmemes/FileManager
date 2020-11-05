@@ -8,18 +8,19 @@
     android:columnCount="2"
     android:orientation="horizontal"
 
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
+
     <LinearLayout
         android:id="@+id/buttonFiles"
         android:orientation="vertical"
         android:gravity="center"
         android:paddingHorizontal="20sp"
-        android:paddingVertical="15sp"
+        android:paddingVertical="25sp"
         android:layout_columnWeight="1"
-        android:layout_margin="40sp"
+        android:layout_margin="30sp"
         android:layout_width="0dp"
         android:background="@drawable/button_menu_bg"
-    >
+        >
         <ImageView
             android:layout_width="50sp"
             android:layout_height="50sp"
@@ -30,15 +31,15 @@
             android:text="Файлы"
             android:gravity="center"
 
-        />
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/buttonSystem"
         android:orientation="vertical"
         android:gravity="center"
         android:paddingHorizontal="20sp"
-        android:layout_margin="40sp"
-        android:paddingVertical="15sp"
+        android:layout_margin="30sp"
+        android:paddingVertical="25sp"
         android:layout_columnWeight="1"
         android:layout_width="0dp"
         android:background="@drawable/button_menu_bg"
@@ -51,6 +52,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Система"
+            android:gravity="center"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonFavorites"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingHorizontal="20sp"
+        android:layout_margin="30sp"
+        android:paddingVertical="25sp"
+        android:layout_columnWeight="1"
+        android:layout_width="0dp"
+        android:background="@drawable/button_menu_bg"
+        >
+        <ImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            app:srcCompat="@drawable/ic_baseline_favorite_24"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Избранное"
             android:gravity="center"
 
             />

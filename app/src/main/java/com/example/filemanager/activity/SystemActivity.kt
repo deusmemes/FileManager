@@ -1,11 +1,12 @@
-package com.example.filemanager
+package com.example.filemanager.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import androidx.appcompat.app.AppCompatActivity
+import com.example.filemanager.R
+import com.example.filemanager.convertFileSize
 import kotlinx.android.synthetic.main.activity_system.*
 import java.io.File
-import kotlin.math.pow
 
 @Suppress("DEPRECATION")
 class SystemActivity : AppCompatActivity() {

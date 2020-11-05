@@ -1,18 +1,17 @@
-package com.example.filemanager.services
+package com.example.filemanager.service
 
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.FileProvider
 import com.example.filemanager.BuildConfig
-import com.example.filemanager.list.FilesActivity
+import com.example.filemanager.activity.FilesActivity
 import com.example.filemanager.interfaces.IFileService
 import java.io.File
 
 class FileService: IFileService {
-    override fun getList(path: String): Array<File> {
+    override fun getList(path: String): List<File> {
         return File(path).listFiles()!!
             .sortedWith(compareBy { it.name })
-            .toTypedArray()
     }
 
     override fun open(file: File, context: Context) {

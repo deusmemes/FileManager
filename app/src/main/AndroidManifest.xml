@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SystemActivity" android:label="Система"></activity>
+        <activity android:name=".activity.FavoritesActivity" />
+        <activity android:name=".activity.FilesActivity" />
+        <activity
+            android:name=".activity.SystemActivity"
+            android:label="Система" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -26,8 +30,9 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".list.FilesActivity" />
-        <activity android:name=".MainActivity" android:label="Файловый менеджер">
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="Файловый менеджер">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

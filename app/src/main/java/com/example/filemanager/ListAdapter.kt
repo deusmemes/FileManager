@@ -1,4 +1,4 @@
-package com.example.filemanager.list
+package com.example.filemanager
 
 import android.content.Context
 import android.util.Log
@@ -13,8 +13,8 @@ import com.example.filemanager.convertFileSize
 import java.io.File
 
 
-class ListAdapter(private val context: Context, private val data: Array<File>): BaseAdapter() {
-
+class ListAdapter(private val context: Context): BaseAdapter() {
+    private var data = emptyList<File>()
     private var inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -65,5 +65,9 @@ class ListAdapter(private val context: Context, private val data: Array<File>): 
         }
 
         return R.drawable.ic_baseline_insert_drive_file_24
+    }
+
+    fun setAdapterData(adapterData: List<File>) {
+        this.data = adapterData
     }
 }

@@ -9,14 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.FilesActivity"
+        tools:context=".activity.FavoritesActivity"
         android:background="#ffffff"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/recyclerViewFiles"
+            android:id="@+id/recyclerView"
             android:layout_margin="5dp" />
     </RelativeLayout>
 </layout>

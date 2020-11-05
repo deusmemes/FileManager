@@ -4,6 +4,6 @@ import android.content.Context
 import java.io.File
 
 interface IFileService {
-    fun getList(path: String): Array<File>
+    fun getList(path: String): List<File>
     fun open(file: File, context: Context)
 }
