@@ -1,13 +1,11 @@
 package com.example.filemanager.viewmodel
 
-import android.util.Log
-import androidx.databinding.Bindable
 import androidx.databinding.Observable
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.filemanager.db.entity.Favorite
 import com.example.filemanager.db.repository.FavoriteRepository
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -27,9 +25,12 @@ class FavoriteViewModel(private val repository: FavoriteRepository) : ViewModel(
         repository.delete(favorite)
     }
 
+    fun getByPath(path: String): Deferred<Favorite?> = viewModelScope.async {
+        return@async repository.getByPath(path)
+    }
+
     suspend fun isInFavorites(path: String): Boolean {
         val def = viewModelScope.async { repository.getByPath(path) }
-//        Log.i("MYTAG", def.await().toString())
         return def.await() != null
     }
 

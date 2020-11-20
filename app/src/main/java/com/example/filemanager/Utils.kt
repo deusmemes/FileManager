@@ -1,7 +1,5 @@
 package com.example.filemanager
 
-import java.io.File
-
 private const val b = 1024
 private const val kb = b * 1024
 private const val mb = kb * 1024

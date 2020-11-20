@@ -1,27 +1,25 @@
 package com.example.filemanager
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filemanager.databinding.ListItemBinding
-import com.example.filemanager.service.FileService
-import com.example.filemanager.viewmodel.FavoriteViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.File
 
 class RecyclerViewAdapter(
-    private val context: Context,
-    private val files: List<File>,
-    private val viewModel: FavoriteViewModel
+    private val files: List<ListItem>,
+    private val clickListener: (File) -> Unit,
+    private val toggleListener: (ListItem) -> Unit
 ) : RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var layoutInflater = LayoutInflater.from(parent.context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ListItemBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.list_item, parent, false)
-        return ViewHolder(binding, context, viewModel)
+        Log.d("MYTAG", files.toString())
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -29,28 +27,22 @@ class RecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(files[position])
+        holder.bind(files[position], clickListener, toggleListener)
     }
 }
 
-class ViewHolder(val binding: ListItemBinding, val context: Context, val viewModel: FavoriteViewModel) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(file: File) {
-        binding.listRowText.text = file.name
-        if (file.isFile) {
-            val formatSize = convertFileSize(file.length())
-            binding.listRowDescription.text = String.format("%.2f ${formatSize.second}", formatSize.first)
-        }
-        else binding.listRowDescription.text = "${file.listFiles()!!.size} элементов"
-        if (file.isDirectory) {
-            binding.listRowIcon.setImageResource(R.drawable.ic_baseline_folder_24)
-        } else {
-            binding.listRowIcon.setImageResource(getFileIcon(file))
+class ViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(item: ListItem, clickListener:(File) -> Unit, toggleListener: (ListItem) -> Unit) {
+        item.file.let {
+            setListItemName(it)
+            setListItemText(it)
+            setListItemIcon(it)
         }
 
-        binding.root.setOnClickListener { FileService().open(file, context) }
-        binding.favoriteIcon.setOnClickListener {
-            GlobalScope.launch { viewModel.toggle(file.absolutePath) }
-        }
+        if (item.isFavorite) binding.favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_24)
+        else binding.favoriteIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        binding.listItemLayout.setOnClickListener { clickListener(item.file) }
+        binding.favoriteIcon.setOnClickListener { toggleListener(item) }
     }
 
     private fun getFileIcon(file: File): Int {
@@ -62,5 +54,25 @@ class ViewHolder(val binding: ListItemBinding, val context: Context, val viewMod
         }
 
         return R.drawable.ic_baseline_insert_drive_file_24
+    }
+
+    private fun setListItemIcon(file: File) {
+        if (file.isDirectory) {
+            binding.listRowIcon.setImageResource(R.drawable.ic_baseline_folder_24)
+        } else {
+            binding.listRowIcon.setImageResource(getFileIcon(file))
+        }
+    }
+
+    private fun setListItemName(file: File) {
+        binding.listRowText.text = file.name
+    }
+
+    private fun setListItemText(file: File) {
+        if (file.isFile) {
+            val formatSize = convertFileSize(file.length())
+            binding.listRowDescription.text = String.format("%.2f ${formatSize.second}", formatSize.first)
+        }
+        else binding.listRowDescription.text = "${file.listFiles().size} элементов"
     }
 }
