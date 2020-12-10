@@ -1,6 +1,5 @@
 package com.example.filemanager.activity
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +18,7 @@ import java.io.File
 
 open class ListBase(private val context: Context, application: Application) {
     var favoriteViewModel: FavoriteViewModel
+    val fileService = FileService.getInstance()
 
     init {
         val dao = AppDatabase.getInstance(application).favoriteDao
@@ -29,6 +29,10 @@ open class ListBase(private val context: Context, application: Application) {
 
     fun listItemClicked(file: File) {
         FileService().open(file, context)
+    }
+
+    fun uploadFile(file: File) {
+        fileService.upload(file, context)
     }
 
     fun listItemFavoriteClicked(item: ListItem) {
@@ -45,7 +49,7 @@ open class ListBase(private val context: Context, application: Application) {
         dialog.show(activity.supportFragmentManager, "delete")
     }
 
-    fun toggleListItem(file: File) = GlobalScope.launch {
+    private fun toggleListItem(file: File) = GlobalScope.launch {
         favoriteViewModel.toggle(file.absolutePath)
     }
 }

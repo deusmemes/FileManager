@@ -40,7 +40,9 @@ class FavoritesActivity : AppCompatActivity() {
                 binding.recyclerView.adapter = RecyclerViewAdapter(
                     it.map { f -> ListItem(File(f.path), true) },
                     { selectedItem: File -> base.listItemClicked(selectedItem)},
-                    { selectedItem: ListItem -> base.listItemFavoriteClicked(selectedItem) })
+                    { selectedItem: ListItem -> base.listItemFavoriteClicked(selectedItem) },
+                    { selectedItem: File -> base.uploadFile(selectedItem)}
+                )
             }
         )
     }

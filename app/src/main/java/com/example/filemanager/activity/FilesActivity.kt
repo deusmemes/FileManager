@@ -29,7 +29,7 @@ class FilesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_files)
-        fileService = FileService()
+        fileService = FileService.getInstance()
         val path = intent.getStringExtra(FILES_PATH)!!
         title = File(path).name
         base = ListBase(this, application)
@@ -52,7 +52,9 @@ class FilesActivity : AppCompatActivity() {
                 binding.recyclerViewFiles.adapter = RecyclerViewAdapter(
                     files.map { f -> ListItem(f, it.find { fav -> fav.path == f.absolutePath } != null) },
                     { selectedItem: File -> base.listItemClicked(selectedItem)},
-                    { selectedItem: ListItem -> base.listItemFavoriteClicked(selectedItem) })
+                    { selectedItem: ListItem -> base.listItemFavoriteClicked(selectedItem) },
+                    { selectedItem: File -> base.uploadFile(selectedItem)}
+                )
             }
         )
     }

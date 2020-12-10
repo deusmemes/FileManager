@@ -4,22 +4,24 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.example.filemanager.R
 import com.example.filemanager.permissions.PermissionManager
 import com.example.filemanager.service.FileService
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
+
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private val ROOT_PATH: String = Environment.getExternalStorageDirectory().absolutePath
     private val permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.INTERNET
     )
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun run() {
-        val fileService = FileService()
+        val fileService = FileService.getInstance()
         val rootDir = File(ROOT_PATH)
 
         buttonFiles.setOnClickListener { fileService.open(rootDir, this) }
